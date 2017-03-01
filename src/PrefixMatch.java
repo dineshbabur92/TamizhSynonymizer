@@ -41,12 +41,14 @@ class Trie{
 			if(!children.containsKey(ch)){
 				children.put(ch, new TrieNode(ch));
 			}
+			System.out.println("inserted char: " + ch);
 			temp = children.get(ch);
 		}
 		temp.setIsEnd(true);
 	}
 	public int findPrefix(String str){
 		int prefixLength= 0;
+		int matchLength = 0;
 		TrieNode temp = root;
 		for(int i =0; i< str.length(); i ++){
 			
@@ -54,15 +56,19 @@ class Trie{
 			
 			char ch = new Character(str.charAt(i));
 			if(children.containsKey(ch)){
+				System.out.println("Found char: " + ch);
 				temp = children.get(ch);
+				
 				if(temp.isEnd()){
 					prefixLength = i + 1;
 				}
+				
+				matchLength =  i + 1;
 			}
 			else
 				break;
 		}
-		return prefixLength;
+		return matchLength > (0.5 * str.length()) ? matchLength : 0;
 	}
 	
 }
@@ -71,36 +77,12 @@ public class PrefixMatch {
 		
 		Trie tamizhDict = new Trie();
 		
-		tamizhDict.insert("are");
-		tamizhDict.insert("area");
-		tamizhDict.insert("base");
-		tamizhDict.insert("cat");
-		tamizhDict.insert("cater");
-		tamizhDict.insert("basement");
+		tamizhDict.insert("இயக்கர்வேந்தன்");
  
-        String input = "caterer";
+        String input = "இயக்கன்";
         System.out.print(input + ":   ");
-        System.out.println(input.substring(0, tamizhDict.findPrefix(input)));              
- 
-        input = "basement";
-        System.out.print(input + ":   ");
-        System.out.println(input.substring(0, tamizhDict.findPrefix(input)));                      
- 
-        input = "are";
-        System.out.print(input + ":   ");
-        System.out.println(input.substring(0, tamizhDict.findPrefix(input)));              
- 
-        input = "arex";
-        System.out.print(input + ":   ");
-        System.out.println(input.substring(0, tamizhDict.findPrefix(input)));              
- 
-        input = "basemexz";
-        System.out.print(input + ":   ");
-        System.out.println(input.substring(0, tamizhDict.findPrefix(input)));                      
- 
-        input = "xyz";
-        System.out.print(input + ":   ");
-        System.out.println(input.substring(0, tamizhDict.findPrefix(input)));
+        System.out.println("Match Length: " + tamizhDict.findPrefix(input));
+        System.out.println(input.substring(0, tamizhDict.findPrefix(input)));    
 		
 	}
 }
